@@ -16,7 +16,7 @@ if __name__ == "__main__":
     train_texts, test_texts, train_labels, test_labels = train_test_split(data['text'], data['label'], test_size=0.33)
     # TO DO : OH encode labels, Make dataset usable by bert 
     train_dataset = None 
-    test_dataset = None
+    eval_dataset = None
     tokenizer = AutoTokenizer.from_pretrained("camembert-base")
     model = AutoModelForSequenceClassification.from_pretrained("camembert-base", num_labels=2)
     training_args = TrainingArguments(output_dir="test_trainer", evaluation_strategy="epoch")
