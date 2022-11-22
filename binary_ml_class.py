@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score
 
 from vectorization import vectorize_data
 
+
 if __name__ == "__main__":
     vect_texts, bin_labels, vect_labels = vectorize_data("data/intent-detection-train.csv")
     train_texts, test_texts, train_labels, test_labels = train_test_split(vect_texts, bin_labels, test_size=0.2)
