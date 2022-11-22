@@ -34,7 +34,6 @@ if __name__ == "__main__":
     texts = data['text'].tolist()
     labels = binarize_labels(data['label'].tolist())
     train_texts, test_texts, train_labels, test_labels = train_test_split(texts, labels, test_size=0.33)
-    # TO DO : OH encode labels, Make dataset usable by bert 
     train_tokens = tokenizer(train_texts, padding=True)
     test_tokens = tokenizer(test_texts, padding=True)
     train_dataset = ToTorchDataset(train_tokens, train_labels)
