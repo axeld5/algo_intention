@@ -1,7 +1,8 @@
 import pandas as pd  
+import numpy as np
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.decomposition import TruncatedSVD
 
 def vectorize_data(file_name):
@@ -29,5 +30,11 @@ def binarize_labels(labels):
 
 def encode_labels(labels):
     encoder = LabelEncoder()
+    vect_labels = encoder.fit_transform(labels)
+    return vect_labels
+
+def oh_encode_labels(labels):
+    encoder = OneHotEncoder(sparse=False)
+    labels = (np.array(labels)).reshape(-1,1)
     vect_labels = encoder.fit_transform(labels)
     return vect_labels
