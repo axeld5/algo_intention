@@ -3,7 +3,7 @@ from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
-from vectorization import vectorize_data
+from models.utils import vectorize_data
 
 
 if __name__ == "__main__":

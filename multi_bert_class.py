@@ -6,8 +6,10 @@ import torch
 from sklearn.model_selection import train_test_split
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, pipeline 
 
-from vectorization import encode_labels
-from metrics import pure_accuracy, penalize_luggage_lost_errors, penalize_out_scope_errors
+from utils import encode_labels
+from models.metrics.pure_accuracy import pure_accuracy
+from models.metrics.lost_pen import penalize_luggage_lost_errors
+from models.metrics.out_of_scope_pen import penalize_out_scope_errors
 
 def compute_metrics(eval_pred):
     metric = evaluate.load("accuracy")
@@ -37,6 +39,7 @@ if __name__ == "__main__":
     train_texts, test_texts, train_labels, test_labels = train_test_split(texts, labels, test_size=0.33)
     train_tokens = tokenizer(train_texts, padding=True)
     test_tokens = tokenizer(test_texts, padding=True)
+    print(train_tokens)
     train_dataset = ToTorchDataset(train_tokens, train_labels)
     eval_dataset = ToTorchDataset(test_tokens, test_labels)
     model = AutoModelForSequenceClassification.from_pretrained("camembert-base", num_labels=9)
@@ -49,7 +52,7 @@ if __name__ == "__main__":
         compute_metrics=compute_metrics,
     )
     trainer.train()
-    classifier = pipeline(task="text-classification", model=model, tokenizer=tokenizer)
+    classifier = pipeline(task="text-classification", model=model.to("cpu"), tokenizer=tokenizer)
     pred_labels = [0]*len(test_labels) 
     for i in range(len(test_texts)):
         prediction = classifier(test_texts[i])

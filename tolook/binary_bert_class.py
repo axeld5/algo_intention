@@ -6,7 +6,7 @@ import torch
 from sklearn.model_selection import train_test_split
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
 
-from vectorization import binarize_labels
+from models.utils import binarize_labels
 
 def compute_metrics(eval_pred):
     metric = evaluate.load("accuracy")
