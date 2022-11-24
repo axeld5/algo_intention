@@ -15,7 +15,7 @@ class MLModel:
     def predict(self, vect_texts:np.array) -> List[int]:
         return self.model.predict(vect_texts)
 
-    def evaluate(self, vect_texts:np.array, vect_labels:List[int], label_dict:Dict[str, int]) -> Dict[str, float]:
+    def evaluate_metrics(self, vect_texts:np.array, vect_labels:List[int], label_dict:Dict[str, int]) -> Dict[str, float]:
         metric_dict = {}
         pred_labels = self.predict(vect_texts)
         metric_dict["accuracy"] = pure_accuracy(vect_labels, pred_labels)
