@@ -31,7 +31,7 @@ def model_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:List[
 
 if __name__ == "__main__":
     data = pd.read_csv(args.filename)    
-    model_perf = model_perf_eval(data, BertModel(num_train_epochs=5), 
+    model_perf = model_perf_eval(data, BertModel(num_train_epochs=10), 
             {"random_forest" : MLModel(RandomForestClassifier()), 
             "log_regression": MLModel(LogisticRegressionCV())})
     visualize(model_perf)
