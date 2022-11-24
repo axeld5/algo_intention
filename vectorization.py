@@ -12,8 +12,8 @@ def vectorize_data(file_name):
     vectorizer = TfidfVectorizer()
     vect_texts = vectorizer.fit_transform(texts)
     binary_labels = binarize_labels(labels)
-    vect_labels = encode_labels(labels)
-    return vect_texts, binary_labels, vect_labels
+    vect_labels, label_dict = encode_labels(labels)
+    return vect_texts, binary_labels, vect_labels, label_dict
 
 
 def reduce_data(vect_texts):
@@ -31,7 +31,12 @@ def binarize_labels(labels):
 def encode_labels(labels):
     encoder = LabelEncoder()
     vect_labels = encoder.fit_transform(labels)
-    return vect_labels
+    label_dict = {}
+    ordered_labels = encoder.classes_ 
+    for i in range(9):
+        label = ordered_labels[i]
+        label_dict[label] = i
+    return vect_labels, label_dict
 
 def oh_encode_labels(labels):
     encoder = OneHotEncoder(sparse=False)

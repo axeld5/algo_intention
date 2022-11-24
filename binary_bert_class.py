@@ -32,7 +32,7 @@ if __name__ == "__main__":
     data = pd.read_csv("data/intent-detection-train.csv")    
     tokenizer = AutoTokenizer.from_pretrained("camembert-base")
     texts = data['text'].tolist()
-    labels = binarize_labels(data['label'].tolist())
+    labels, label_dict = binarize_labels(data['label'].tolist())
     train_texts, test_texts, train_labels, test_labels = train_test_split(texts, labels, test_size=0.33)
     train_tokens = tokenizer(train_texts, padding=True)
     test_tokens = tokenizer(test_texts, padding=True)
