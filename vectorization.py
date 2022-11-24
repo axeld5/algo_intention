@@ -11,7 +11,7 @@ def vectorize_data(file_name):
     labels = data['label'].tolist()
     vectorizer = TfidfVectorizer()
     vect_texts = vectorizer.fit_transform(texts)
-    binary_labels = binarize_labels(labels)
+    binary_labels = binarize_labels(labels, "out_of_scope")
     vect_labels, label_dict = encode_labels(labels)
     return vect_texts, binary_labels, vect_labels, label_dict
 
@@ -21,10 +21,10 @@ def reduce_data(vect_texts):
     data_reduced = reducer.fit_transform(vect_texts)
     return data_reduced
 
-def binarize_labels(labels):
+def binarize_labels(labels, label):
     encoded_labels = [0]*len(labels)
     for i in range(len(labels)):
-        if labels[i] == "out_of_scope":
+        if labels[i] == label:
             encoded_labels[i] = 1
     return encoded_labels 
 
