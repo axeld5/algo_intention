@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt 
 
-from vectorization import vectorize_data, reduce_data
+from models.utils import vectorize_data, reduce_data
 
 if __name__ == "__main__":
     vect_texts, binary_labels, vect_labels = vectorize_data("data/intent-detection-train.csv")
