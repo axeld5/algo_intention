@@ -110,6 +110,15 @@ Je recherche un vol aller-retour de AAF à DIA du 23 février au 28 février,boo
 Pourriez-vous faire une réservation de vol avec Air Emirates d'Orlando à Londres,book_flight
 J'ai besoin de réserver un vol aller-retour de Dallas à Los Angeles du 2 au 10 mars,book_flight
 Je voudrais savoir quels vols sont disponibles sur El Paso à Dallas le 10 juin pour moins de 300 $,book_flight
+Serait-il possible de me réserver un vol Air France pour Nice,book_flight
+J'aimerais être informé des vols possibles à réserver pour Sydney le 20 avril,book_flight
+Donnez-moi la liste des vols disponibles pour New York pour moins de 200€,book_flight
+Je cherche à réserver un vol aller-retour pour Berlin du 15 mars au 21 mars,book_flight
+Reservez-moi un vol pour Helsinki depuis Washington qui part mercredi,book_flight
+J'ai besoin de faire une réservation de vol pour Washington pour ce soir,book_flight
+Y a-t-il la possibilité de réserver des vols pour Brasilia pour moins de 150 $,book_flight
+Informez-moi de la liste des vols le 2 juillet pour moins de 300 $,book_flight
+Je désire savoir s'il est possible de réserver un vol qui part de Dallas à partir du 25 novembre,book_flight
 Combien coûte des frais de découvert pour la banque,out_of_scope
 Quelle taille d'essuie-glace cette voiture prend-t-elle,out_of_scope
 Quel est le plus grand état des États-Unis,out_of_scope
