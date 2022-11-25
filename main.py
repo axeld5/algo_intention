@@ -1,4 +1,5 @@
 import argparse 
+import json
 import pandas as pd 
 
 from copy import copy 
@@ -8,7 +9,7 @@ from sklearn.linear_model import LogisticRegressionCV
 from sklearn.model_selection import train_test_split
 from typing import List, Dict
 
-from utils import vectorize_data
+from utils import vectorize_data, invert_label_dictionary
 from vis import visualize
 from models.ml_model import MLModel
 from models.cambert import BertModel
@@ -32,6 +33,8 @@ def model_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:List[
         model_perf[model_name] = model.evaluate_metrics(test_vect_texts, test_labels, label_dict)
     bert_model.model.save_pretrained("./saved_models/")
     save_model(ml_model_dict)
+    out_file = open('./saved_models/inv_label_dict.json','w+')
+    json.dump(invert_label_dictionary(label_dict),out_file)
     return model_perf
 
 def average_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:List[MLModel], rstate_list:List[int]) -> Dict[str, Dict[str, int]]:
@@ -53,7 +56,7 @@ def average_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:Lis
 
 def save_model(ml_model_dict:List[MLModel]) -> None:
     for model_name, model in ml_model_dict.items():
-        dump(model, "./saved_models/"+model_name+".joblib")
+        dump(model, "./saved_models/bert_model"+model_name+".joblib")
 
 
 if __name__ == "__main__":
@@ -70,7 +73,7 @@ if __name__ == "__main__":
         n_iter = len(rstate_list)
         model_perf_list = []
         for i in range(n_iter):
-            model_perf_list.append(model_perf_eval(data, BertModel(num_train_epochs=1), 
+            model_perf_list.append(model_perf_eval(data, BertModel(num_train_epochs=10), 
                 {"random_forest" : MLModel(RandomForestClassifier()), 
                 "log_regression": MLModel(LogisticRegressionCV())}, rstate_list[i]))
         final_perf = model_perf_list[0]

@@ -39,6 +39,10 @@ class BertModel:
             label = int(prediction[0]['label'][-1])
             pred_labels[i] = label
         return pred_labels
+    
+    def load_model(self, path):
+        self.model = self.model.from_pretrained(path)
+        return self
 
     def evaluate_metrics(self, texts:List[str], vect_labels:List[int], label_dict:Dict[str, int]) -> Dict[str, float]:
         metric_dict = {}
