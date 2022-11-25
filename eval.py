@@ -1,7 +1,6 @@
 import argparse 
 import pandas as pd 
 
-from copy import copy 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegressionCV
 from sklearn.model_selection import train_test_split
@@ -31,30 +30,13 @@ def model_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:List[
         model_perf[model_name] = model.evaluate_metrics(test_vect_texts, test_labels, label_dict)
     return model_perf
 
-def average_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:List[MLModel], rstate_list:List[int]) -> Dict[str, Dict[str, int]]:
-    n_iter = len(rstate_list)
-    model_perf_list = []
-    for i in range(n_iter):
-        bert_model_copy = copy(bert_model)
-        ml_model_dict_copy = copy(ml_model_dict)
-        model_perf_list.append(model_perf_eval(data, bert_model_copy, ml_model_dict_copy, rstate_list[i]))
-    final_perf = model_perf_list[0]
-    for i in range(1, n_iter):
-        for model_name, performances in model_perf_list[i].items():
-            for metric, score in performances.items():
-                final_perf[model_name][metric] += score 
-    for model_name, performances in final_perf.items():
-        for metric, score in performances.items():
-            final_perf[model_name][metric] = final_perf[model_name][metric]/n_iter
-    return final_perf
-
 if __name__ == "__main__":
     data = pd.read_csv(args.filename)    
     rstate_list = [i for i in range(10)]
     n_iter = len(rstate_list)
     model_perf_list = []
     for i in range(n_iter):
-        model_perf_list.append(model_perf_eval(data, BertModel(num_train_epochs=1), 
+        model_perf_list.append(model_perf_eval(data, BertModel(num_train_epochs=10), 
             {"random_forest" : MLModel(RandomForestClassifier()), 
             "log_regression": MLModel(LogisticRegressionCV())}, rstate_list[i]))
     final_perf = model_perf_list[0]

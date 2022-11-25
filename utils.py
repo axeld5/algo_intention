@@ -50,3 +50,9 @@ def binarize_labels(labels:List[int], label:int) -> List[int]:
         if labels[i] == label:
             encoded_labels[i] = 1
     return encoded_labels 
+
+def invert_label_dictionary(label_dict):
+    inverted_label_dict = {} # or change to defaultdict(list)
+    for k, v in label_dict.items():
+        inverted_label_dict.setdefault(v, []).append(k)
+    return inverted_label_dict

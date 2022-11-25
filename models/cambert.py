@@ -20,7 +20,6 @@ class BertModel:
         self.tokenizer = AutoTokenizer.from_pretrained("camembert-base")
         self.model = AutoModelForSequenceClassification.from_pretrained("camembert-base", num_labels=num_labels)
         self.training_args = TrainingArguments(output_dir="test_trainer", evaluation_strategy="epoch", num_train_epochs=num_train_epochs)
-        self.label_dict = None
 
     def fit(self, train_texts:List[str], train_labels:List[int], eval_texts:List[str], eval_labels:List[int]) -> None:
         trainer = Trainer(
@@ -40,6 +39,10 @@ class BertModel:
             label = int(prediction[0]['label'][-1])
             pred_labels[i] = label
         return pred_labels
+    
+    def load_model(self, path):
+        self.model = self.model.from_pretrained(path)
+        return self
 
     def evaluate_metrics(self, texts:List[str], vect_labels:List[int], label_dict:Dict[str, int]) -> Dict[str, float]:
         metric_dict = {}
