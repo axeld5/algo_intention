@@ -9,7 +9,6 @@ from sklearn.model_selection import train_test_split
 from typing import List, Dict
 
 from utils import vectorize_data, invert_label_dictionary
-from vis import visualize
 from models.ml_model import MLModel
 from models.cambert import BertModel
 

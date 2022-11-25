@@ -6,8 +6,10 @@ from .metrics import pure_accuracy, penalize_luggage_lost_errors, penalize_out_s
 
 class MLModel:
     
-    def __init__(self, model) -> None:
+    def __init__(self, model, tokenizer) -> None:
         self.model = model
+        self.tokenizer = tokenizer
+        self.inv_label_dict = None
 
     def fit(self, vect_texts:np.array, vect_labels:List[int]) -> None:
         self.model.fit(vect_texts, vect_labels)

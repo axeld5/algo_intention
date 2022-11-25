@@ -3,11 +3,7 @@ import json
 import pandas as pd 
 
 from joblib import load
-from sklearn.model_selection import train_test_split
-from typing import List, Dict
 
-from utils import vectorize_data
-from vis import visualize
 from models.ml_model import MLModel
 from models.cambert import BertModel
 
