@@ -2,6 +2,7 @@ import argparse
 import pandas as pd 
 
 from copy import copy 
+from joblib import dump
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegressionCV
 from sklearn.model_selection import train_test_split
@@ -29,6 +30,8 @@ def model_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:List[
     for model_name, model in ml_model_dict.items():
         model.fit(train_vect_texts, train_labels)
         model_perf[model_name] = model.evaluate_metrics(test_vect_texts, test_labels, label_dict)
+    bert_model.model.save_pretrained("./saved_models/")
+    save_model(ml_model_dict)
     return model_perf
 
 def average_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:List[MLModel], rstate_list:List[int]) -> Dict[str, Dict[str, int]]:
@@ -48,21 +51,34 @@ def average_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:Lis
             final_perf[model_name][metric] = final_perf[model_name][metric]/n_iter
     return final_perf
 
+def save_model(ml_model_dict:List[MLModel]) -> None:
+    for model_name, model in ml_model_dict.items():
+        dump(model, "./saved_models/"+model_name+".joblib")
+
+
 if __name__ == "__main__":
-    data = pd.read_csv(args.filename)    
-    rstate_list = [i for i in range(10)]
-    n_iter = len(rstate_list)
-    model_perf_list = []
-    for i in range(n_iter):
-        model_perf_list.append(model_perf_eval(data, BertModel(num_train_epochs=1), 
-            {"random_forest" : MLModel(RandomForestClassifier()), 
-            "log_regression": MLModel(LogisticRegressionCV())}, rstate_list[i]))
-    final_perf = model_perf_list[0]
-    for i in range(1, n_iter):
-        for model_name, performances in model_perf_list[i].items():
+    task = "save"
+    if task == "save":
+        data = pd.read_csv(args.filename)
+        model_perf = model_perf_eval(data, BertModel(num_train_epochs=1),
+                {"random_forest" : MLModel(RandomForestClassifier()), 
+                "log_regression": MLModel(LogisticRegressionCV())})
+        visualize(model_perf)
+    if task == "compare":
+        data = pd.read_csv(args.filename)    
+        rstate_list = [i for i in range(10)]
+        n_iter = len(rstate_list)
+        model_perf_list = []
+        for i in range(n_iter):
+            model_perf_list.append(model_perf_eval(data, BertModel(num_train_epochs=1), 
+                {"random_forest" : MLModel(RandomForestClassifier()), 
+                "log_regression": MLModel(LogisticRegressionCV())}, rstate_list[i]))
+        final_perf = model_perf_list[0]
+        for i in range(1, n_iter):
+            for model_name, performances in model_perf_list[i].items():
+                for metric, score in performances.items():
+                    final_perf[model_name][metric] += score 
+        for model_name, performances in final_perf.items():
             for metric, score in performances.items():
-                final_perf[model_name][metric] += score 
-    for model_name, performances in final_perf.items():
-        for metric, score in performances.items():
-            final_perf[model_name][metric] = final_perf[model_name][metric]/n_iter
-    visualize(final_perf)
+                final_perf[model_name][metric] = final_perf[model_name][metric]/n_iter
+        visualize(final_perf)
