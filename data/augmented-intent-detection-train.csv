@@ -6,17 +6,44 @@ Comment dire «hôtel» en finnois,translate
 "J'ai besoin que vous traduisiez la phrase, «nous y serons bientôt» en portugais",translate
 Veuillez me dire comment demander un taxi en français,translate
 Comment dire bonjour en anglais,translate
+Traduisez-moi le mot français en néerlandais,translate
+Est-il possible de m'indiquer comment dire "restaurant" en hebreu,translate
+Je souhaite avoir la traduction de "salade" en arabe,translate
+J'ai besoin de savoir comment dire dormir en anglais,translate
+Donnez-moi la traduction de "le service était bon" en russe,translate
+Comment un espagnol dirait-il "allons au cinéma ce soir",translate
+Je veux savoir comment on dit "magique" en allemand,translate
+J'ai envie de traduire "bonheur" en hindi,translate
 La Corée du Nord a-t-elle des alertes de voyage que je devrais être conscientes,travel_alert
 Y a-t-il des alertes de voyage pour la Syrie,travel_alert
 Y a-t-il une alerte de voyage pour la Russie,travel_alert
 Est-il sûr de se rendre en Islande,travel_alert
 Parlez-moi des alertes de voyage émises pour l'Allemagne,travel_alert
+J'aimerais savoir s'il y a une alerte de voyage pour l'Italie,travel_alert
+Est-ce qu'il y a une alerte de voyage pour le Royaume-Uni,travel_alert
+Portez à ma connaissance s'il y a des alertes de voyage concernant le Qatar,travel_alert
+Est-ce sans danger de se déplacer en Chine,travel_alert
+Je voudrais être informé des alertes de voyage pour le Pakistan,travel_alert
+Y a-t-il une alerte de voyage pour les Etats-Unis,travel_alert
+Est-ce qu'il est dangereux de voyager vers l'Ukraine,travel_alert
+"J'ai envie de voyager vers l'Australie, y a-t-il une alerte de voyage",travel_alert
+Je veux être sûr qu'il n'y a pas d'alerte de voyage pour mon vol vers l'Autriche,travel_alert
+Indiquez-moi s'il y a une alerte de voyage pour le Canada,travel_alert
 Y a-t-il des nouvelles sur le vol DL123,flight_status
 Quand allons-nous commencer à monter à bord de mon vol prévu,flight_status
 Quand mon vol décollera-t-il,flight_status
 Quand mon vol atterrira-t-il,flight_status
 quelle est la porte d'embarquement pour mon vol AF847,flight_status
 Quand vais-je arriver à destination,flight_status
+J'aimerais savoir l'heure d'arrivée de mon vol,flight_status
+Indiquez-moi la porte d'embarquement pour mon vol BC309,flight_status
+Quand embarque le vol DF201,flight_status
+Je veux l'heure de départ de mon vol,flight_status
+Mon vol est-il maintenu,flight_status
+Est-il possible de me donner quand le vol AC902 décolle,flight_status
+Je souhaiterais avoir la porte d'embarquement de mon vol,flight_status
+Quand est-ce que mon avion arrive,flight_status
+"Je veux savoir quand si le vol prévu le 26 juin à 9h en direction de l'Australie est maintenu",flight_status
 Localiser les bagages perdus de Flight America Airlines à O'Hare,lost_luggage
 Perte des bagages sur Flight America Airlines à O'Hare,lost_luggage
 Je pense que mes bagages ont été perdus,lost_luggage
@@ -24,6 +51,14 @@ Je pense que mes bagages ont été perdus,lost_luggage
 "Aide, j'ai perdu mes bagages",lost_luggage
 Savez-vous qui je devrais contacter car mes valises ne sont pas arrivées,lost_luggage
 À qui dois-je me plaindre que mes bagages n'arrivent pas à l'aéroport,lost_luggage
+"Je ne trouve pas mes bagages, je les ai perdus",lost_luggage
+"Mes bagages sont introuvables à l'aéroport, où dois-je aller",lost_luggage
+Où devrais-je me rendre en cas de bagages perdus,lost_luggage
+Bagages perdus sur le vol Air France AB204 depuis Orly,lost_luggage
+"Je cherche mes valises à l'aeroport et ne les trouve pas, ou sont-elles censé être",lost_luggage
+Je ne trouve pas mes valises après le vol Turkey Airlines CL405,lost_luggage
+J'ai besoin de savoir où m'adresser en cas de bagages perdus,lost_luggage
+Savez-vous la procédure en cas de perte de bagages,lost_luggage
 Veuillez suggérer des activités touristiques amusantes à Tokyo,travel_suggestion
 "Si je vais à Evans, que dois-je faire",travel_suggestion
 Quels sont les bons restaurants à Chicago,travel_suggestion
@@ -32,6 +67,13 @@ Que puis-je faire à Nashville,travel_suggestion
 Donnez-moi une liste de choses à faire à Orlando,travel_suggestion
 Où est la meilleure cave du sud de la France,travel_suggestion
 Y a-t-il des activités touristiques amusantes en Australie,travel_suggestion
+Quels sont les lieux les plus intéressants à Hawaii,travel_suggestion
+Que faudrait-il visiter en priorité en Californie,travel_suggestion
+"Je me rends en Islande, donnez-moi une liste de bonnes adresses",travel_suggestion
+J'aimerais avoir la liste des meilleurs bars à Toulouse,travel_suggestion
+Comment exploiter au mieux mon temps libre à Paris,travel_suggestion
+Je veux le guide des lieux intéressants à Seattle,travel_suggestion
+Où devrais-je aller en priorité si je suis à Pékin,travel_suggestion
 Voulez-vous me faire part des restrictions de bagage à main pour American Airlines,carry_on
 Restrictions de cabine pour les émirats arabes unis,carry_on
 Qu'est-ce que je suis autorisé à prendre en cabine avec American Airlines,carry_on
@@ -40,6 +82,13 @@ Combien de bagages à main puis-je prendre pendant un vol avec United pour Lax,c
 Quelles sont les règles concernant les bagages à main pour les vols Virgin Airlines,carry_on
 Y a-t-il une limite de poids de bagage cabine,carry_on
 Dois-je payer pour mes bagages à main,carry_on
+Quelle est la limite de poids pour mes bagages,carry_on
+Est-ce que je peux prendre mon bagage à main en cabine avec Air France,carry_on
+Y a-t-il un prix à payer pour mes bagages à main avec Turkey Airlines,carry_on
+"J'ai un bagage cabine, quelle est ma limite de poids",carry_on
+J'aimerais avoir les restrictions de bagages pour l'Afrique du Sud,carry_on
+Suis-je limité dans le nombre de bagages que je dois prendre pour mon vol,carry_on
+Donnez-moi le poids maximal pour mon bagage à main,carry_on
 Réservez-moi une chambre du 11 au 15 novembre à Cali,book_hotel
 Trouvez-moi un endroit où séjourner à Cali du 11 au 15 novembre,book_hotel
 Quels hôtels ont des critiques décentes à Bangor,book_hotel
@@ -47,12 +96,29 @@ Veuillez me trouver une chambre d'hôtel pour 4 personnes du lundi au mercredi �
 "Trouvez un hôtel Columbus, Ohio avec de bonnes critiques",book_hotel
 "S'il vous plaît, aidez-moi à réserver un endroit où séjourner à Pittsburgh du lundi au vendredi",book_hotel
 J'ai besoin d'une chambre d'hôtel assez grande pour 4 personnes du lundi au mercredi à Lakewood,book_hotel
+Je cherche une chambre d'hôtel pour 3 personnes dont un enfant pour vendredi à Marseille,book_hotel
+Trouvez-moi un hôtel pour ma famille de 5 à Dubaï,book_hotel
+Est-il possible de m'indiquer un lieu où séjourner ce lundi à Sydney,book_hotel
+Quel est le meilleur hôtel à Londres,book_hotel
+Y a-t-il un hôtel où il reste 3 chambres pour ma famille pour lundi à Washington,book_hotel
+J'aimerais que l'on m'indique un hôtel Mercure à Avignon,book_hotel
+Listez-moi les hôtels à plus de 3 étoiles à Nice,book_hotel
+Je veux une chambre du 12 au 15 novembre à Lisbonne,book_hotel
 Trouvez-moi des vols aller-retour de LAX vers SFOX,book_flight
 Réservez un vol de Chicago à DC lundi et revenant mercredi,book_flight
 Je recherche un vol aller-retour de AAF à DIA du 23 février au 28 février,book_flight
 Pourriez-vous faire une réservation de vol avec Air Emirates d'Orlando à Londres,book_flight
 J'ai besoin de réserver un vol aller-retour de Dallas à Los Angeles du 2 au 10 mars,book_flight
 Je voudrais savoir quels vols sont disponibles sur El Paso à Dallas le 10 juin pour moins de 300 $,book_flight
+Serait-il possible de me réserver un vol Air France pour Nice,book_flight
+J'aimerais être informé des vols possibles à réserver pour Sydney le 20 avril,book_flight
+Donnez-moi la liste des vols disponibles pour New York pour moins de 200€,book_flight
+Je cherche à réserver un vol aller-retour pour Berlin du 15 mars au 21 mars,book_flight
+Reservez-moi un vol pour Helsinki depuis Washington qui part mercredi,book_flight
+J'ai besoin de faire une réservation de vol pour Washington pour ce soir,book_flight
+Y a-t-il la possibilité de réserver des vols pour Brasilia pour moins de 150 $,book_flight
+Informez-moi de la liste des vols le 2 juillet pour moins de 300 $,book_flight
+Je désire savoir s'il est possible de réserver un vol qui part de Dallas à partir du 25 novembre,book_flight
 Combien coûte des frais de découvert pour la banque,out_of_scope
 Quelle taille d'essuie-glace cette voiture prend-t-elle,out_of_scope
 Quel est le plus grand état des États-Unis,out_of_scope
