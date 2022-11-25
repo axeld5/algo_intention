@@ -4,10 +4,13 @@ import torch
 import warnings
 import numpy as np
 
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, pipeline 
-from typing import List, Dict 
 
-from .utils import ToTorchDataset, encode_labels
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, pipeline 
+from typing import List, Dict, Tuple
+
+from .utils import ToTorchDataset, invert_label_dictionary
 from .metrics import pure_accuracy, penalize_luggage_lost_errors, penalize_out_scope_errors
 
 os.environ["WANDB_DISABLED"] = "true"
@@ -15,48 +18,65 @@ warnings.filterwarnings("ignore")
 
 class BertModel:
     
-    def __init__(self, num_labels:int=9, num_train_epochs:int=10) -> None:
+    def __init__(self, num_labels:int=9, num_train_epochs:int=10, random_state:int=42) -> None:
         
         self.tokenizer = AutoTokenizer.from_pretrained("camembert-base")
         self.model = AutoModelForSequenceClassification.from_pretrained("camembert-base", num_labels=num_labels)
         self.training_args = TrainingArguments(output_dir="test_trainer", evaluation_strategy="epoch", num_train_epochs=num_train_epochs)
+        self.encoder = LabelEncoder()
+        self.random_state = random_state
         self.inv_label_dict = None 
 
-    def fit(self, train_texts:List[str], train_labels:List[int], eval_texts:List[str], eval_labels:List[int]) -> None:
+    def fit(self, texts:List[str], labels:List[str]) -> None:
+        encoded_labels = self.encode_labels_(labels)
+        train_dataset, eval_dataset = self.encode_data_(texts, encoded_labels)
         trainer = Trainer(
             model=self.model,
             args=self.training_args,
-            train_dataset=self.encode_data_(train_texts, train_labels),
-            eval_dataset=self.encode_data_(eval_texts, eval_labels),
+            train_dataset=train_dataset,
+            eval_dataset=eval_dataset,
             compute_metrics=self.compute_metrics_,
         )
         trainer.train()
 
-    def predict(self, texts:List[str]) -> List[int]:
+    def predict(self, texts:List[str]) -> List[str]:
         classifier = pipeline(task="text-classification", model=self.model.to("cpu"), tokenizer=self.tokenizer)
         pred_labels = [0]*len(texts) 
         for i in range(len(texts)):
             prediction = classifier(texts[i])
             label = int(prediction[0]['label'][-1])
-            pred_labels[i] = label
+            pred_labels[i] = self.inv_label_dict[label]
         return pred_labels
     
     def load_model(self, path):
         self.model = self.model.from_pretrained(path)
         return self
 
-    def evaluate_metrics(self, texts:List[str], vect_labels:List[int], label_dict:Dict[str, int]) -> Dict[str, float]:
+    def evaluate_metrics(self, texts:List[str], labels:List[str]) -> Dict[str, float]:
         metric_dict = {}
         pred_labels = self.predict(texts)
-        metric_dict["accuracy"] = pure_accuracy(vect_labels, pred_labels)
-        metric_dict["lost_lug_pen"] = penalize_luggage_lost_errors(vect_labels, pred_labels, label_dict)
-        metric_dict["out_scope_err"] = penalize_out_scope_errors(vect_labels, pred_labels, label_dict)
+        metric_dict["accuracy"] = pure_accuracy(labels, pred_labels)
+        metric_dict["lost_lug_pen"] = penalize_luggage_lost_errors(labels, pred_labels)
+        metric_dict["out_scope_err"] = penalize_out_scope_errors(labels, pred_labels)
         return metric_dict
     
-    def encode_data_(self, texts:List[str], labels:List[int]) -> torch.utils.data.Dataset:
-        tokens = self.tokenizer(texts, padding=True)
-        dataset = ToTorchDataset(tokens, labels)
-        return dataset
+    def encode_data_(self, texts:List[str], labels:List[int]) -> Tuple[torch.utils.data.Dataset, torch.utils.data.Dataset]:
+        train_texts, eval_texts, train_labels, eval_labels = train_test_split(texts, labels, test_size=0.2, random_state=self.random_state)
+        train_tokens = self.tokenizer(train_texts, padding=True)
+        eval_tokens = self.tokenizer(eval_texts, padding=True)
+        train_dataset = ToTorchDataset(train_tokens, train_labels)
+        eval_dataset = ToTorchDataset(eval_tokens, eval_labels)
+        return train_dataset, eval_dataset
+    
+    def encode_labels_(self, labels:List[str]) -> np.ndarray:
+        vect_labels = self.encoder.fit_transform(labels)
+        label_dict = {}
+        ordered_labels = self.encoder.classes_ 
+        for i in range(9):
+            label = ordered_labels[i]
+            label_dict[label] = i
+        self.inv_label_dict = invert_label_dictionary(label_dict)
+        return vect_labels
 
     def compute_metrics_(self, eval_pred:List[int]) -> dict:
         metric = evaluate.load("accuracy")
