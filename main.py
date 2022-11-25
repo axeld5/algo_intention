@@ -16,12 +16,12 @@ parser.add_argument("--filename")
 
 args = parser.parse_args()
 
-def model_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:List[MLModel]) -> Dict[str, Dict[str, int]]:
+def model_perf_eval(data:pd.DataFrame, bert_model:BertModel, ml_model_dict:List[MLModel], random_state:int=42) -> Dict[str, Dict[str, int]]:
     texts = data['text'].tolist()
     vect_texts, vect_labels, label_dict = vectorize_data(args.filename)    
-    train_texts, test_texts, train_labels, test_labels = train_test_split(texts, vect_labels, test_size=0.33, random_state=42)
-    train_bert_texts, eval_texts, train_bert_labels, eval_labels = train_test_split(train_texts, train_labels, test_size=0.2, random_state=42)
-    train_vect_texts, test_vect_texts, train_labels, test_labels = train_test_split(vect_texts, vect_labels, test_size=0.33, random_state=42)
+    train_texts, test_texts, train_labels, test_labels = train_test_split(texts, vect_labels, test_size=0.33, random_state=random_state)
+    train_bert_texts, eval_texts, train_bert_labels, eval_labels = train_test_split(train_texts, train_labels, test_size=0.2, random_state=random_state)
+    train_vect_texts, test_vect_texts, train_labels, test_labels = train_test_split(vect_texts, vect_labels, test_size=0.33, random_state=random_state)
     model_perf = {}
     bert_model.fit(train_bert_texts, train_bert_labels, eval_texts, eval_labels)
     model_perf["bert"] = bert_model.evaluate_metrics(test_texts, test_labels, label_dict)
