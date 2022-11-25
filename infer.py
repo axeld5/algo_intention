@@ -25,5 +25,4 @@ if __name__ == "__main__":
     inv_label_dict = json.load(f)
     for i in range(len(predicted_labels)):
         predicted_labels[i] = inv_label_dict[str(predicted_labels[i])][0]
-    print(data["label"].tolist())
     print(predicted_labels) 
