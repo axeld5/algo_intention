@@ -4,13 +4,12 @@ import torch
 import warnings
 import numpy as np
 
-
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, pipeline 
 from typing import List, Dict, Tuple
 
-from .utils import ToTorchDataset, invert_label_dictionary
+from .utils import ToTorchDataset
 from .metrics import pure_accuracy, penalize_luggage_lost_errors, penalize_out_scope_errors
 
 os.environ["WANDB_DISABLED"] = "true"
@@ -25,7 +24,6 @@ class BertModel:
         self.training_args = TrainingArguments(output_dir="test_trainer", evaluation_strategy="epoch", num_train_epochs=num_train_epochs)
         self.encoder = LabelEncoder()
         self.random_state = random_state
-        self.inv_label_dict = None 
 
     def fit(self, texts:List[str], labels:List[str]) -> None:
         encoded_labels = self.encode_labels_(labels)
@@ -45,7 +43,8 @@ class BertModel:
         for i in range(len(texts)):
             prediction = classifier(texts[i])
             label = int(prediction[0]['label'][-1])
-            pred_labels[i] = self.inv_label_dict[label]
+            pred_labels[i] = label
+        pred_labels = self.encoder.inverse_transform(pred_labels).tolist()
         return pred_labels
     
     def load_model(self, path):
@@ -70,12 +69,6 @@ class BertModel:
     
     def encode_labels_(self, labels:List[str]) -> np.ndarray:
         vect_labels = self.encoder.fit_transform(labels)
-        label_dict = {}
-        ordered_labels = self.encoder.classes_ 
-        for i in range(9):
-            label = ordered_labels[i]
-            label_dict[label] = i
-        self.inv_label_dict = invert_label_dictionary(label_dict)
         return vect_labels
 
     def compute_metrics_(self, eval_pred:List[int]) -> dict:

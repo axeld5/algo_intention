@@ -9,12 +9,6 @@ def binarize_labels(labels:List[int], label:int) -> List[int]:
             encoded_labels[i] = 1
     return encoded_labels 
 
-def invert_label_dictionary(label_dict):
-    inverted_label_dict = {} 
-    for k, v in label_dict.items():
-        inverted_label_dict[v] = k
-    return inverted_label_dict
-
 class ToTorchDataset(torch.utils.data.Dataset):
     def __init__(self, encodings:Dict[str, int], labels:List[int]):
         self.encodings = encodings
