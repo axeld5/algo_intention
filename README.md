@@ -12,11 +12,9 @@ The description of the problem we made was the following: given a textual input,
 
 To run the algorithm comparison, run eval.py the following way with the filename you want to evaluate the models on: 
 
-"""
-
+```
 python eval.py --filename filename
-
-"""
+```
 
 What eval.py does is compare the model's average performances over a dataset. To do so, it uses three metrics that are relevant to a problem:
 - Pure accuracy
@@ -29,11 +27,9 @@ It does not save the models that are trained. They are purely trained for the ev
 
 To train the algorithms, run train.py the following way with the filename you want to train the models on:
 
-"""
-
+```
 python train.py --filename filename
-
-"""
+```
 
 This command saves the models into the saved_models folder in the .joblib format.
 
@@ -41,10 +37,8 @@ This command saves the models into the saved_models folder in the .joblib format
 
 To infer on a csv file, run infer.py the following way with the filename you want to infer on:
 
-"""
-
+```
 python infer.py --filename filename
-
-"""
+```
 
 This command realizes the inference.
