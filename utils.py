@@ -21,14 +21,14 @@ def reduce_data(vect_texts:np.array) -> np.array:
     data_reduced = reducer.fit_transform(vect_texts)
     return data_reduced
 
-def encode_labels(labels:List[str]) -> Tuple[np.array, Dict[str, int]]:
+def encode_labels(labels:List[str]) -> Tuple[np.array, Dict[int, str]]:
     encoder = LabelEncoder()
     vect_labels = encoder.fit_transform(labels)
     label_dict = {}
     ordered_labels = encoder.classes_ 
     for i in range(9):
         label = ordered_labels[i]
-        label_dict[label] = i
+        label_dict[i] = label
     return vect_labels, label_dict
 
 def binarize_labels(labels:List[int], label:int) -> List[int]:
@@ -36,4 +36,4 @@ def binarize_labels(labels:List[int], label:int) -> List[int]:
     for i in range(len(labels)):
         if labels[i] == label:
             encoded_labels[i] = 1
-    return encoded_labels 
+    return encoded_labels

@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegressionCV
 from sklearn.model_selection import train_test_split
 from typing import Dict, Any 
 
-from vis import visualize
+from result_viz import visualize
 from models.ml_model import MLModel
 from models.cambert import BertModel
 
