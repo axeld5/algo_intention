@@ -1,5 +1,4 @@
 import argparse 
-import json
 import pandas as pd 
 
 from joblib import dump
@@ -23,7 +22,7 @@ def train_and_save(data:pd.DataFrame, ml_model_dict:Dict[str, Any]) -> None:
     save_model(ml_model_dict)
 
 
-def save_model(ml_model_dict:List[MLModel]) -> None:
+def save_model(ml_model_dict:List[Any]) -> None:
     for model_name, model in ml_model_dict.items():
         dump(model, "./saved_models/"+model_name+".joblib")
     

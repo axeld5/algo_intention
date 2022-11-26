@@ -3,8 +3,6 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
 from typing import List, Dict, Tuple
-
-from .utils import invert_label_dictionary
 from .metrics import pure_accuracy, penalize_luggage_lost_errors, penalize_out_scope_errors
 
 class MLModel:
@@ -13,7 +11,6 @@ class MLModel:
         self.model = model
         self.tokenizer = TfidfVectorizer()
         self.encoder = LabelEncoder()
-        self.inv_label_dict = None
 
     def fit(self, texts:List[str], labels:List[str]) -> None:
         vect_texts, vect_labels = self.train_tokenizer_(texts, labels)
@@ -21,11 +18,8 @@ class MLModel:
 
     def predict(self, texts:List[str]) -> List[str]:
         vect_texts = self.tokenizer.transform(texts)
-        predicted_labels = self.model.predict(vect_texts)
-        pred_labels = [""]*len(predicted_labels)
-        for i in range(len(predicted_labels)):
-            pred_labels[i] = self.inv_label_dict[predicted_labels[i]]
-        return pred_labels
+        predicted_labels = self.encoder.inverse_transform(self.model.predict(vect_texts)).tolist()
+        return predicted_labels
     
     def train_tokenizer_(self, texts:List[str], labels:List[str]) -> Tuple[np.ndarray, List[int]]:
         vect_texts = self.tokenizer.fit_transform(texts)
@@ -34,12 +28,6 @@ class MLModel:
     
     def encode_labels_(self, labels:List[str]) -> np.ndarray:
         vect_labels = self.encoder.fit_transform(labels)
-        label_dict = {}
-        ordered_labels = self.encoder.classes_ 
-        for i in range(9):
-            label = ordered_labels[i]
-            label_dict[label] = i
-        self.inv_label_dict = invert_label_dictionary(label_dict)
         return vect_labels
 
 
