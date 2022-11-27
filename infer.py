@@ -13,7 +13,6 @@ if __name__ == "__main__":
     texts = data['text'].tolist()
     bert_model = load("./saved_models/bert_model.joblib")
     predicted_bert_labels = bert_model.predict(texts)
-    print(predicted_bert_labels) 
-    rf_model = load("./saved_models/random_forest.joblib")
-    predicted_rf_labels = rf_model.predict(texts)
-    print(predicted_rf_labels)
+    data["label"] = predicted_bert_labels
+    data_adress = (args.filename).split('.')[0]
+    data.to_csv(data_adress+"-inferred.csv", index=False)

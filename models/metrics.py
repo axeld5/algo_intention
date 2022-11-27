@@ -1,4 +1,4 @@
-from typing import List,  Dict
+from typing import List
 
 from sklearn.metrics import accuracy_score, recall_score, precision_score
 
