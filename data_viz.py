@@ -26,21 +26,29 @@ def plot_classes(filename:str) -> None:
     labels = data['label'].tolist()
     vect_texts, vect_labels, label_dict = vectorize_data(texts, labels)
     reduced_texts = reduce_data(vect_texts)
-    binary_labels = binarize_labels(labels, "out_of_scope")
-    fig, ax = plt.subplots(1, 2, figsize=(15,10))
-    bin_scatter = ax[0].scatter(reduced_texts[:,0], reduced_texts[:,1], c=binary_labels)
+    scope_labels = binarize_labels(labels, "out_of_scope")
+    luggage_labels = binarize_labels(labels, "lost_luggage")
+    fig, ax = plt.subplots(1, 3, figsize=(15,10))
+    scope_scatter = ax[0].scatter(reduced_texts[:,0], reduced_texts[:,1], c=scope_labels)
     ax[0].set_title("plot of data in_scope vs out_of_scope")
-    bin_scat_elem = bin_scatter.legend_elements()
-    bin_scat_elem[1][0] = "in_scope"
-    bin_scat_elem[1][1] = "out_of_scope"
-    ax[0].legend(*bin_scat_elem,
+    scope_scat_elem = scope_scatter.legend_elements()
+    scope_scat_elem[1][0] = "in_scope"
+    scope_scat_elem[1][1] = "out_of_scope"
+    ax[0].legend(*scope_scat_elem,
                     loc="lower left", title="Classes")
-    scatter = ax[1].scatter(reduced_texts[:,0], reduced_texts[:,1], c=vect_labels)
-    ax[1].set_title("plot of labelled data")
+    luggage_scatter = ax[1].scatter(reduced_texts[:,0], reduced_texts[:,1], c=luggage_labels)
+    ax[1].set_title("plot of data not_lost_luggage vs lost_luggage")
+    luggage_scat_elem = luggage_scatter.legend_elements()
+    luggage_scat_elem[1][0] = "not_lost_luggage"
+    luggage_scat_elem[1][1] = "lost_luggage"
+    ax[1].legend(*luggage_scat_elem,
+                    loc="lower left", title="Classes")
+    scatter = ax[2].scatter(reduced_texts[:,0], reduced_texts[:,1], c=vect_labels)
+    ax[2].set_title("plot of labelled data")
     scat_elem = scatter.legend_elements()
     for i in range(len(scat_elem[1])):
         scat_elem[1][i] = label_dict[i]
-    ax[1].legend(*scat_elem,
+    ax[2].legend(*scat_elem,
                     loc="lower left", title="Classes")
     plt.show()
 
