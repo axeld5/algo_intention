@@ -22,6 +22,14 @@ class MLModel:
         predicted_labels = self.encoder.inverse_transform(self.model.predict(vect_texts)).tolist()
         return predicted_labels
     
+    def evaluate_metrics(self, texts:List[str], labels:List[str]) -> Dict[str, float]:
+        metric_dict = {}
+        pred_labels = self.predict(texts)
+        metric_dict["accuracy"] = pure_accuracy(labels, pred_labels)
+        metric_dict["lost_lug_pen"] = penalize_luggage_lost_errors(labels, pred_labels)
+        metric_dict["out_scope_err"] = penalize_out_scope_errors(labels, pred_labels)
+        return metric_dict
+    
     def train_tokenizer_(self, texts:List[str], labels:List[str]) -> Tuple[np.ndarray, List[int]]:
         vect_texts = self.tokenizer.fit_transform(texts)
         vect_labels = self.encode_labels_(labels)
@@ -30,12 +38,3 @@ class MLModel:
     def encode_labels_(self, labels:List[str]) -> np.ndarray:
         vect_labels = self.encoder.fit_transform(labels)
         return vect_labels
-
-
-    def evaluate_metrics(self, texts:List[str], labels:List[str]) -> Dict[str, float]:
-        metric_dict = {}
-        pred_labels = self.predict(texts)
-        metric_dict["accuracy"] = pure_accuracy(labels, pred_labels)
-        metric_dict["lost_lug_pen"] = penalize_luggage_lost_errors(labels, pred_labels)
-        metric_dict["out_scope_err"] = penalize_out_scope_errors(labels, pred_labels)
-        return metric_dict

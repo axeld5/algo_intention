@@ -27,10 +27,3 @@ def encode_labels(labels:List[str]) -> Tuple[np.array, Dict[int, str]]:
         label = ordered_labels[i]
         label_dict[i] = label
     return vect_labels, label_dict
-
-def binarize_labels(labels:List[int], label:int) -> List[int]:
-    encoded_labels = [0]*len(labels)
-    for i in range(len(labels)):
-        if labels[i] == label:
-            encoded_labels[i] = 1
-    return encoded_labels

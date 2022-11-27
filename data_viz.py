@@ -4,7 +4,8 @@ import numpy as np
 import pandas as pd 
 import seaborn as sns
 
-from utils import vectorize_data, reduce_data, binarize_labels
+from utils import vectorize_data, reduce_data
+from models.utils import binarize_labels
 
 def show_label_occ(filename:str) -> None:    
     data = pd.read_csv(filename)
@@ -16,6 +17,7 @@ def show_label_occ(filename:str) -> None:
     plt.figure(figsize=(15,10))
     df = pd.DataFrame({'labels' : unique_labels, 'label_occurences': label_occurences})
     sns.barplot(data=df, x="labels", y="label_occurences")
+    plt.title("Label occurences in the data")
     plt.show()
 
 def plot_classes(filename:str) -> None:    

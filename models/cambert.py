@@ -1,12 +1,12 @@
 import evaluate
 import os 
-import torch
 import warnings
 import numpy as np
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, pipeline 
+from torch.utils.data import Dataset
 from typing import List, Dict, Tuple
 
 from .utils import ToTorchDataset
@@ -46,10 +46,6 @@ class BertModel:
             pred_labels[i] = label
         pred_labels = self.encoder.inverse_transform(pred_labels).tolist()
         return pred_labels
-    
-    def load_model(self, path):
-        self.model = self.model.from_pretrained(path)
-        return self
 
     def evaluate_metrics(self, texts:List[str], labels:List[str]) -> Dict[str, float]:
         metric_dict = {}
@@ -59,7 +55,7 @@ class BertModel:
         metric_dict["out_scope_err"] = penalize_out_scope_errors(labels, pred_labels)
         return metric_dict
     
-    def encode_data_(self, texts:List[str], labels:List[int]) -> Tuple[torch.utils.data.Dataset, torch.utils.data.Dataset]:
+    def encode_data_(self, texts:List[str], labels:List[int]) -> Tuple[Dataset, Dataset]:
         train_texts, eval_texts, train_labels, eval_labels = train_test_split(texts, labels, test_size=0.2, random_state=self.random_state)
         train_tokens = self.tokenizer(train_texts, padding=True)
         eval_tokens = self.tokenizer(eval_texts, padding=True)
