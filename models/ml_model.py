@@ -2,14 +2,14 @@ import numpy as np
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
-from typing import List, Dict, Tuple 
+from typing import List, Dict, Tuple
 
 from .metrics import pure_accuracy, penalize_luggage_lost_errors, penalize_out_scope_errors
 
 class MLModel:
     
-    def __init__(self, model) -> None:
-        self.model = model
+    def __init__(self, skl_model) -> None:
+        self.model = skl_model
         self.tokenizer = TfidfVectorizer()
         self.encoder = LabelEncoder()
 

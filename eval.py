@@ -15,7 +15,7 @@ parser.add_argument("--filename")
 
 args = parser.parse_args()
 
-def model_perf_eval(data:pd.DataFrame, ml_model_dict:Dict[str, Any], random_state:int=42) -> Dict[str, Dict[str, int]]:
+def model_perf_eval(data:pd.DataFrame, ml_model_dict:Dict[str, Any], random_state: int = 42) -> Dict[str, Dict[str, int]]:
     texts = data['text'].tolist()
     labels = data['label'].tolist()  
     train_texts, test_texts, train_labels, test_labels = train_test_split(texts, labels, test_size=0.33, random_state=random_state)

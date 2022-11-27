@@ -17,7 +17,7 @@ warnings.filterwarnings("ignore")
 
 class BertModel:
     
-    def __init__(self, num_labels:int=9, num_train_epochs:int=10, random_state:int=42) -> None:
+    def __init__(self, num_labels: int = 9, num_train_epochs: int = 10, random_state: int = 42) -> None:
         
         self.tokenizer = AutoTokenizer.from_pretrained("camembert-base")
         self.model = AutoModelForSequenceClassification.from_pretrained("camembert-base", num_labels=num_labels)
