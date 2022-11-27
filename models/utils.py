@@ -2,7 +2,7 @@ import torch
 
 from typing import List, Dict
 
-def binarize_labels(labels:List[int], label:int) -> List[int]:
+def binarize_labels(labels:List[str], label:str) -> List[int]:
     encoded_labels = [0]*len(labels)
     for i in range(len(labels)):
         if labels[i] == label:

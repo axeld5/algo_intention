@@ -41,4 +41,4 @@ To infer on a csv file, run infer.py the following way with the filename you wan
 python infer.py --filename filename
 ```
 
-This command realizes the inference.
+This command realizes the inference and saves the inferred file in a csv format in the same folder that the file was taken from.
