@@ -7,10 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
 from sklearn.decomposition import TruncatedSVD
 
-def vectorize_data(file_name:str) -> Tuple[np.array, np.array, Dict[str, int]]:
-    data = pd.read_csv(file_name)
-    texts = data['text'].tolist()
-    labels = data['label'].tolist()
+def vectorize_data(texts:List[str], labels:List[str]) -> Tuple[np.array, np.array, Dict[str, int]]:
     vectorizer = TfidfVectorizer()
     vect_texts = vectorizer.fit_transform(texts)
     vect_labels, label_dict = encode_labels(labels)

@@ -1,3 +1,4 @@
+import argparse
 import matplotlib.pyplot as plt 
 import numpy as np 
 import pandas as pd 
@@ -5,7 +6,7 @@ import seaborn as sns
 
 from utils import vectorize_data, reduce_data, binarize_labels
 
-def show_label_occ(filename):    
+def show_label_occ(filename:str) -> None:    
     data = pd.read_csv(filename)
     labels = data['label'].tolist()
     unique_labels, counts = np.unique(labels, return_counts=True)
@@ -17,10 +18,11 @@ def show_label_occ(filename):
     sns.barplot(data=df, x="labels", y="label_occurences")
     plt.show()
 
-if __name__ == "__main__":
-    data = pd.read_csv("data/intent-detection-train.csv")
-    labels = data['label']
-    vect_texts, vect_labels, label_dict = vectorize_data("data/intent-detection-train.csv")
+def plot_classes(filename:str) -> None:    
+    data = pd.read_csv(filename)    
+    texts = data['text'].tolist()
+    labels = data['label'].tolist()
+    vect_texts, vect_labels, label_dict = vectorize_data(texts, labels)
     reduced_texts = reduce_data(vect_texts)
     binary_labels = binarize_labels(labels, "out_of_scope")
     fig, ax = plt.subplots(1, 2, figsize=(15,10))
@@ -39,3 +41,12 @@ if __name__ == "__main__":
     ax[1].legend(*scat_elem,
                     loc="lower left", title="Classes")
     plt.show()
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--filename")
+
+args = parser.parse_args()
+
+if __name__ == "__main__":
+    show_label_occ(args.filename)
+    plot_classes(args.filename)
